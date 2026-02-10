@@ -1,5 +1,11 @@
 const nodemailer = require("nodemailer");
 
+console.log("Email Configuration:", {
+  user: process.env.EMAIL_USER,
+  pass: process.env.EMAIL_PASS ? "***" : "NOT SET",
+  to: process.env.EMAIL_TO,
+});
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -33,10 +39,14 @@ const sendNewVisitEmail = async (visitData) => {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log("New visit email sent");
+    const result = await transporter.sendMail(mailOptions);
+    console.log("✅ New visit email sent successfully:", result.response);
   } catch (error) {
-    console.error("Email send error:", error.message);
+    console.error("❌ NEW VISIT EMAIL ERROR:", {
+      message: error.message,
+      code: error.code,
+      response: error.response,
+    });
   }
 };
 
@@ -66,10 +76,14 @@ const sendRevisitEmail = async (visitData) => {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log("Revisit email sent");
+    const result = await transporter.sendMail(mailOptions);
+    console.log("✅ Revisit email sent successfully:", result.response);
   } catch (error) {
-    console.error("Email send error:", error.message);
+    console.error("❌ REVISIT EMAIL ERROR:", {
+      message: error.message,
+      code: error.code,
+      response: error.response,
+    });
   }
 };
 

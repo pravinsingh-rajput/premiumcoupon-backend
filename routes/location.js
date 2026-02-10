@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
       const updated = await existingVisit.save();
 
       // Send email notification for revisit
-      sendRevisitEmail(updated);
+      await sendRevisitEmail(updated);
 
       return res.status(200).json({
         message: "Success",
@@ -84,7 +84,7 @@ router.post("/", async (req, res) => {
     const savedVisit = await newVisit.save();
 
     // Send email notification for new visit
-    sendNewVisitEmail(savedVisit);
+    await sendNewVisitEmail(savedVisit);
 
     res.status(201).json({
       message: "Success",
