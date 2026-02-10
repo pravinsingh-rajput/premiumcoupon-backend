@@ -10,6 +10,10 @@ const transporter = nodemailer.createTransport({
 
 const sendNewVisitEmail = async (visitData) => {
   try {
+    const pagesText =
+      Array.isArray(visitData.pagesVisited) && visitData.pagesVisited.length > 0
+        ? visitData.pagesVisited.join(" -> ")
+        : "N/A";
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_TO,
@@ -18,6 +22,7 @@ const sendNewVisitEmail = async (visitData) => {
         <h2>New Website Visit Recorded</h2>
         <p><strong>IP Address:</strong> ${visitData.ipAddress}</p>
         <p><strong>Page Visited:</strong> ${visitData.pageVisited || "N/A"}</p>
+        <p><strong>Page Flow (last 30):</strong> ${pagesText}</p>
         <p><strong>Location:</strong> ${visitData.city}, ${visitData.region}, ${visitData.countryName}</p>
         <p><strong>Timezone:</strong> ${visitData.timezone}</p>
         <p><strong>ISP:</strong> ${visitData.organization}</p>
@@ -37,6 +42,10 @@ const sendNewVisitEmail = async (visitData) => {
 
 const sendRevisitEmail = async (visitData) => {
   try {
+    const pagesText =
+      Array.isArray(visitData.pagesVisited) && visitData.pagesVisited.length > 0
+        ? visitData.pagesVisited.join(" -> ")
+        : "N/A";
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_TO,
@@ -45,6 +54,7 @@ const sendRevisitEmail = async (visitData) => {
         <h2>Visitor Returned to Website</h2>
         <p><strong>IP Address:</strong> ${visitData.ipAddress}</p>
         <p><strong>Page Visited:</strong> ${visitData.pageVisited || "N/A"}</p>
+        <p><strong>Page Flow (last 30):</strong> ${pagesText}</p>
         <p><strong>Location:</strong> ${visitData.city}, ${visitData.region}, ${visitData.countryName}</p>
         <p><strong>Timezone:</strong> ${visitData.timezone}</p>
         <p><strong>ISP:</strong> ${visitData.organization}</p>

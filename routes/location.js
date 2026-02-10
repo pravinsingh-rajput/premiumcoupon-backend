@@ -7,6 +7,15 @@ const { sendNewVisitEmail, sendRevisitEmail } = require("../config/mailer");
 router.post("/", async (req, res) => {
   try {
     const visitData = req.body;
+    const incomingPages = Array.isArray(visitData.pages) ? visitData.pages : [];
+    const singlePage = visitData.page || visitData.pageVisited || visitData.url;
+    if (singlePage) {
+      incomingPages.push(singlePage);
+    }
+    const normalizedPages = incomingPages.filter(Boolean);
+    const pageVisited = normalizedPages.length
+      ? normalizedPages[normalizedPages.length - 1]
+      : undefined;
 
     // Map incoming IP field to ipAddress
     const mappedData = {
@@ -38,7 +47,8 @@ router.post("/", async (req, res) => {
         visitData.country_population || visitData.countryPopulation,
       asn: visitData.asn,
       organization: visitData.org || visitData.organization,
-      pageVisited: visitData.page || visitData.pageVisited || visitData.url,
+      pageVisited: pageVisited,
+      pagesVisited: normalizedPages.slice(-30),
     };
 
     // Check if this IP already has a visit record
@@ -49,8 +59,14 @@ router.post("/", async (req, res) => {
       // Update existing visit record
       existingVisit.visitCount += 1;
       existingVisit.lastVisitedAt = new Date();
-      if (mappedData.pageVisited) {
-        existingVisit.pageVisited = mappedData.pageVisited;
+      const mergedPages = []
+        .concat(existingVisit.pagesVisited || [])
+        .concat(mappedData.pagesVisited || [])
+        .filter(Boolean);
+      if (mergedPages.length > 0) {
+        existingVisit.pagesVisited = mergedPages.slice(-30);
+        existingVisit.pageVisited =
+          existingVisit.pagesVisited[existingVisit.pagesVisited.length - 1];
       }
       const updated = await existingVisit.save();
 

@@ -14,7 +14,7 @@ npm run dev      # Development with auto-reload
 
 ### Track Website Visit
 
-**Endpoint:** `POST /api/locations`
+**Endpoint:** `POST /api/V1/user_info`
 
 **Request Body:**
 

@@ -34,6 +34,10 @@ const websiteVisitSchema = new mongoose.Schema({
   asn: String,
   organization: String,
   pageVisited: String,
+  pagesVisited: {
+    type: [String],
+    default: [],
+  },
   visitCount: {
     type: Number,
     default: 1,
