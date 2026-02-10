@@ -21,6 +21,7 @@ npm run dev      # Development with auto-reload
 ```json
 {
   "ip": "49.36.113.223",
+  "page": "/home",
   "network": "49.36.112.0/22",
   "version": "IPv4",
   "city": "Mumbai",
@@ -58,6 +59,7 @@ npm run dev      # Development with auto-reload
   "data": {
     "_id": "507f1f77bcf86cd799439011",
     "ipAddress": "49.36.113.223",
+    "pageVisited": "/home",
     "network": "49.36.112.0/22",
     "ipVersion": "IPv4",
     "city": "Mumbai",
@@ -80,6 +82,7 @@ npm run dev      # Development with auto-reload
 **Fields:**
 
 - `ipAddress` - Visitor's IP address (unique)
+- `pageVisited` - Page/URL the visitor accessed
 - `network` - CIDR network block
 - `ipVersion` - IPv4 or IPv6
 - `city`, `region`, `regionCode` - Location details

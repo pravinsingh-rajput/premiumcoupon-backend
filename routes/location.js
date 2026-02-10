@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
         visitData.country_population || visitData.countryPopulation,
       asn: visitData.asn,
       organization: visitData.org || visitData.organization,
+      pageVisited: visitData.page || visitData.pageVisited || visitData.url,
     };
 
     // Check if this IP already has a visit record
@@ -48,6 +49,9 @@ router.post("/", async (req, res) => {
       // Update existing visit record
       existingVisit.visitCount += 1;
       existingVisit.lastVisitedAt = new Date();
+      if (mappedData.pageVisited) {
+        existingVisit.pageVisited = mappedData.pageVisited;
+      }
       const updated = await existingVisit.save();
 
       // Send email notification for revisit

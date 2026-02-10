@@ -17,6 +17,7 @@ const sendNewVisitEmail = async (visitData) => {
       html: `
         <h2>New Website Visit Recorded</h2>
         <p><strong>IP Address:</strong> ${visitData.ipAddress}</p>
+        <p><strong>Page Visited:</strong> ${visitData.pageVisited || "N/A"}</p>
         <p><strong>Location:</strong> ${visitData.city}, ${visitData.region}, ${visitData.countryName}</p>
         <p><strong>Timezone:</strong> ${visitData.timezone}</p>
         <p><strong>ISP:</strong> ${visitData.organization}</p>
@@ -43,6 +44,7 @@ const sendRevisitEmail = async (visitData) => {
       html: `
         <h2>Visitor Returned to Website</h2>
         <p><strong>IP Address:</strong> ${visitData.ipAddress}</p>
+        <p><strong>Page Visited:</strong> ${visitData.pageVisited || "N/A"}</p>
         <p><strong>Location:</strong> ${visitData.city}, ${visitData.region}, ${visitData.countryName}</p>
         <p><strong>Timezone:</strong> ${visitData.timezone}</p>
         <p><strong>ISP:</strong> ${visitData.organization}</p>

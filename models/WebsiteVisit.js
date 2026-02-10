@@ -33,6 +33,7 @@ const websiteVisitSchema = new mongoose.Schema({
   countryPopulation: Number,
   asn: String,
   organization: String,
+  pageVisited: String,
   visitCount: {
     type: Number,
     default: 1,
